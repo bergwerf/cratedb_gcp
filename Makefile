@@ -11,3 +11,12 @@ crate_ui_install:
 
 crate_ui_run:
 	cd crate-admin; npm run develop
+
+mock_aws_install:
+	pip install localstack awscli awscli-local
+
+mock_aws_run:
+	localstack start -d
+
+mock_aws_status:
+	localstack status services
