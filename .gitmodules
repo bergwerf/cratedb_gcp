@@ -1,3 +1,6 @@
 [submodule "cratedb"]
 	path = cratedb
 	url = https://github.com/bergwerf/cratedb
+[submodule "crate-admin"]
+	path = crate-admin
+	url = https://github.com/crate/crate-admin
