@@ -18,5 +18,11 @@ mock_aws_install:
 mock_aws_run:
 	localstack start -d
 
+mock_aws_log:
+	localstack logs -f
+
 mock_aws_status:
 	localstack status services
+
+mock_aws_create_bucket:
+	awslocal s3api create-bucket --bucket crate-bucket
