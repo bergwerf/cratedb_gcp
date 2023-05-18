@@ -1,0 +1,3 @@
+[submodule "cratedb"]
+	path = cratedb
+	url = https://github.com/bergwerf/cratedb
