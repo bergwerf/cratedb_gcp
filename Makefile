@@ -18,11 +18,19 @@ mock_aws_install:
 mock_aws_run:
 	localstack start -d
 
+mock_aws_kill:
+	localstack stop
+
 mock_aws_log:
 	localstack logs -f
 
 mock_aws_status:
 	localstack status services
 
-mock_aws_create_bucket:
+mock_aws_s3_create_bucket:
 	awslocal s3api create-bucket --bucket crate-bucket
+
+mock_aws_s3_upload_example:
+	echo "Hello, World!" > hello_world.txt
+	awslocal s3 cp hello_world.txt s3://crate-bucket/  
+	rm hello_world.txt
