@@ -1,0 +1,12 @@
+apply plugin: 'java'
+apply plugin: 'application'
+
+mainClassName = 'nl.hbergwerf.example.Main'
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  implementation 'com.google.cloud:google-cloud-storage:2.1.1'
+}

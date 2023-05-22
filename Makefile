@@ -34,3 +34,9 @@ mock_aws_s3_upload_example:
 	echo "Hello, World!" > hello_world.txt
 	awslocal s3 cp hello_world.txt s3://crate-bucket/  
 	rm hello_world.txt
+
+mock_gcs_run:
+	docker run -d --name mock_gcs -p 4443:4443 fsouza/fake-gcs-server -scheme http
+
+mock_gcs_kill:
+	docker kill mock_gcs
