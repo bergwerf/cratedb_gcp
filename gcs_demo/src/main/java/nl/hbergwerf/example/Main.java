@@ -13,7 +13,7 @@ public class Main {
     // Create a bucket.
     Bucket bucket = storage.create(BucketInfo.of("bucket"));
     
-    // Create a blod ID.
+    // Create a blob ID.
     BlobId blobId = BlobId.of(bucket.getName(), "hello");
 
     // Create blob metadata.
