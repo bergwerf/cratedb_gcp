@@ -40,3 +40,6 @@ mock_gcs_run:
 
 mock_gcs_kill:
 	docker kill mock_gcs
+	docker rm mock_gcs
+
+mock_gcs_restart: mock_gcs_kill mock_gcs_run
