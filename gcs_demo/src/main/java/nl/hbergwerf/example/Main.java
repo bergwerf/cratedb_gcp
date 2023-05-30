@@ -14,7 +14,7 @@ import com.google.cloud.storage.*;
 public class Main {
   public static Storage storage;
 
-  public static String bucket = "bucket";
+  public static String bucketName = "bucket";
 
   public static void main(String[] args) throws IOException {
     // Connect to local mock Cloud Storage instance (running in Docker).
@@ -23,18 +23,11 @@ public class Main {
       .setHost("http://localhost:4443").build().getService();
 
     // Create a bucket.
-    storage.create(BucketInfo.of(bucket));
-    
-    // Create a blob ID.
-    BlobId blobId = BlobId.of(bucket, "hello");
-
-    // Create blob metadata.
-    BlobInfo blobInfo = BlobInfo.newBuilder(blobId)
-      .setContentType("text/plain").build();
+    Bucket bucket = storage.create(BucketInfo.of(bucketName));
 
     // Create blob data.
     byte[] data = "Hello, Cloud Storage!".getBytes(StandardCharsets.UTF_8);
-    storage.create(blobInfo, data);
+    bucket.create("hello", data, "text/plain");
 
     // This object is now available under the following URL:
     // http://localhost:4443/storage/v1/b/bucket/o/hello?alt=media
@@ -48,16 +41,19 @@ public class Main {
 
     // Write blob via input stream.
     writeViaStream("world", new ByteArrayInputStream("Streamed text".getBytes()));
+    writeViaStream("hello", new ByteArrayInputStream("Does this overwrite?".getBytes()));
+
+    bucket.create("hello", new byte[] {});
   }
 
   public static void printExists(String blobName) {
-    final BlobId id = BlobId.of(bucket, blobName);
+    final BlobId id = BlobId.of(bucketName, blobName);
     final boolean ex = storage.get(id) != null;
     System.out.println("Blob `" + blobName + "` exists: " + ex);
   }
 
   public static void printReadStream(String blobName) throws IOException {
-    final BlobId id = BlobId.of(bucket, blobName);
+    final BlobId id = BlobId.of(bucketName, blobName);
     final Blob blob = storage.get(id);
     final ReadChannel channel = blob.reader();
     final InputStream stream = Channels.newInputStream(channel);
@@ -67,7 +63,7 @@ public class Main {
   }
 
   public static Blob getBlob(String blobName, boolean failIfAlreadyExists) {
-    final BlobId id = BlobId.of(bucket, blobName);
+    final BlobId id = BlobId.of(bucketName, blobName);
     final BlobInfo info = BlobInfo.newBuilder(id)
             .setContentType("text/plain").build();
     if (failIfAlreadyExists) {
